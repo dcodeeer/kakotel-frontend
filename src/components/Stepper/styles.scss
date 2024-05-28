@@ -1,0 +1,28 @@
+.stepper-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+
+  .count {
+    width: 50px;
+    text-align: center;
+  }
+
+  .btn {
+    background-color: var(--color-dark-blue);
+    color: #fff;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  } 
+}
