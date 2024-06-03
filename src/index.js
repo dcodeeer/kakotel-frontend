@@ -8,32 +8,7 @@ import { store } from 'store';
 
 const root = ReactDOM.createRoot(document.getElementById('wrapper'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
-
-
-const connect = () => {
-  global.ws = new WebSocket("ws://localhost:4000/ws");
-
-  global.ws.onopen = function(e) {
-    // socket.send("Меня зовут Джон");
-  };
-
-  global.ws.onmessage = function(event) {
-    console.log(`[message] Данные получены с сервера: ${event.data}`);
-  };
-
-  global.ws.onclose = function(event) {
-    setInterval(() => connect(), 5000);
-  };
-
-  global.ws.onerror = function(error) {
-    console.log(error)
-  };
-};
-
-connect();

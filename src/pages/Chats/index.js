@@ -1,63 +1,42 @@
-import './styles.scss';
 import { Link, redirect, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import ReactTextareaAutosize from 'react-textarea-autosize';
-import { useState } from 'react';
+import { ChatBox } from './ChatBox';
+import './styles.scss';
+import { store } from 'store';
+import { addChatAction } from 'store/actions/chat';
 
 export const Chats = () => {
   const currentUser = useSelector(state => state.user.data);
-  const { chats, user } = useLoaderData();
+  const chats = useSelector(state => state.chat);
+  
+  const { user } = useLoaderData();
 
-  const [message, setMessage] = useState();
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    e.currentTarget.reset();
-
-    console.log(message);
-  };
+  function truncateText(text, maxLength) {
+    if (!text) return;
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  }
 
   return (
     <div className='chats-page container'>
       <div className='left'>
         {
-          chats.map((chat, index) => (
-            <Link to={`/chats?id=${chat.id}`} className='item' key={index}>
-              <img src={process.env.REACT_APP_FILES_BASE_PATH + chat.friend_photo} alt={chat.friend_firstname} />
+          Object.keys(chats).map((key, index) => (
+            <Link to={`/chats?id=${chats[key].friend_id}`} className='item' key={index}>
+              <img src={process.env.REACT_APP_FILES_BASE_PATH + chats[key].friend_photo} alt={chats[key].friend_firstname} />
               <div className='data'>
-                <div className='name'>{chat.friend_firstname}</div>
-                <div className='last-message'>{chat.last_message_sender === currentUser.id ? 'Вы: ' : ''} {chat.last_message_content}</div>
+                <div className='name'>{`${chats[key].friend_firstname} ${chats[key].friend_lastname}`}</div>
+                <div className='last-message'>{chats[key].last_message_sender === currentUser.id ? 'Вы: ' : ''} {truncateText(chats[key].last_message_content, 18)}</div>
               </div>
-              <div className='new'>1</div>
+              {chats[key].new_messages_count ? <div className='new'>{chats[key].new_messages_count}</div> : null}
             </Link>
           ))
         }
       </div>
-      <div className='right'>
-        { user ? <><div className='top'>
-          <img src={process.env.REACT_APP_FILES_BASE_PATH + user['photo']} alt={user['firstname']} />
-          <div className='data'>
-            <div className='name'>{`${user['firstname']} ${user['lastname']}` }</div>
-            <div className='status'>Сейчас в сети</div>
-          </div>
-        </div>
-        <div className='messages'>
-          {
-            // messages.map((v, i) => (
-            //   <div className={v.sender_id === currentUser.id ? 'message me': 'message'}>
-            //     <div className='time'>{v.created_at}</div>
-            //     <div className='text'>{v.content}</div>
-            //   </div>
-            // ))
-          }
-        </div>
-        <form className='send' onSubmit={onSubmit}>
-           {/* <ReactTextareaAutosize maxRows={3} placeholder='Ваше сообщение...' /> */}
-           <input type='text' placeholder='Ваше сообщение...' onChange={(e) => setMessage(e.target.value)} />         
-          <button><svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512"><path d="M476.59 227.05l-.16-.07L49.35 49.84A23.56 23.56 0 0027.14 52 24.65 24.65 0 0016 72.59v113.29a24 24 0 0019.52 23.57l232.93 43.07a4 4 0 010 7.86L35.53 303.45A24 24 0 0016 327v113.31A23.57 23.57 0 0026.59 460a23.94 23.94 0 0013.22 4 24.55 24.55 0 009.52-1.93L476.4 285.94l.19-.09a32 32 0 000-58.8z"/></svg></button>
-        </form></> : '' }
-      </div>
+      {user ? <ChatBox user={user} currentUser={currentUser} /> : null }
     </div>  
   );
 };
@@ -71,7 +50,14 @@ Chats.loader = async ({ request }) => {
       if (!chats.data) {
         chats.data = [];
       }
-      output.chats = chats.data;
+
+      const newChats = {};
+      for (let i = 0; i < chats.data.length; i++) {
+        const element = chats.data[i];
+        const key = 'chat_id:' + element['id'];
+        newChats[key] = element;
+      }
+      store.dispatch(addChatAction(newChats));
     }
 
     const userId = new URL(request.url).searchParams.get('id');
@@ -85,7 +71,9 @@ Chats.loader = async ({ request }) => {
     }
 
     return output;
-  } catch {}
+  } catch (e) {
+    console.log(e)
+  }
 
   return redirect('/');
 };  

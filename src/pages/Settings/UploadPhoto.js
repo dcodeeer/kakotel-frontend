@@ -19,7 +19,7 @@ export const UploadPhoto = () => {
       const reader = new FileReader();
       reader.onload = async (event) => {
         const arrayBuffer = event.target.result;
-        const blob = new Blob([arrayBuffer], { type: file.type });
+        // const blob = new Blob([arrayBuffer], { type: file.type });
 
         imagePreview.src = arrayBuffer;
         
@@ -42,7 +42,7 @@ export const UploadPhoto = () => {
       <div className='form-title'>Фотография</div>
       <div className='content'>
         <img id='preview' src={data.photo} />
-        <input id='photo' type='file' onChange={onChange} />
+        <input id='photo' type='file' onChange={onChange} accept="image/png, image/gif, image/jpeg" />
         <label className='button' htmlFor='photo'>Загрузить фото</label>
       </div>
     </div>

@@ -28,7 +28,7 @@ export const Password = () => {
       setModalOpen(true);
       return;
     }
-    
+    const form = e.currentTarget;
     axios.patch(
       '/users/changePassword',
       { 'old_password': oldPassword, 'new_password': newPassword },
@@ -36,9 +36,11 @@ export const Password = () => {
       setModalTitle('Сообщение');
       setModalText('Пароль успешно изменен');
       setModalOpen(true);
-      e.currentTarget.reset();
+      console.log(form);
+      form.reset();
       return;
     }).catch((reason) => {
+      console.log(reason)
       setModalTitle('Ошибка');
       setModalText('Старый пароль введен не верно');
       setModalOpen(true);

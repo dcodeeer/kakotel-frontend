@@ -60,13 +60,13 @@ export const Lease = () => {
     const body = {
       'description': description,
       'images': images,
-      'amenities': amenities,
+      'amenities': [1],
       'price_night': priceNight,
       'price_week': priceWeek,
       'rooms': rooms,
       'showers': showers,
       'baby_rooms': babyRooms,
-      'category_id': categories,
+      'category_id': 1,
       'address': {
         'address_number': addressNumber,
         'street': addressStreet,
@@ -91,6 +91,8 @@ export const Lease = () => {
 
       {isLoad ? <LoaderModal /> : ''}
       <Modal isVisible={isModalOpen} onClose={onClose} title={modalTitle} text={modalText} />
+
+      <Pictures setPictures={setImages} />
 
       <div className='section address'>
         <div className='subtitle'>Адрес</div>
@@ -131,7 +133,7 @@ export const Lease = () => {
         </div>
       </div>
 
-      <div className='section category'>
+      {/* <div className='section category'>
         <div className='subtitle'>Вариант размещения</div>
         <div className='bottom'>
           <select onChange={(e) => setCategories(parseInt(e.target.value))}>
@@ -147,11 +149,14 @@ export const Lease = () => {
         <div className='subtitle'>Удобства</div>
         <div className='bottom'>
           
+          {
+            data['amenities'].map((value, index) => (
+              <div key={index}>{value.name}</div>
+            ))
+          }
           
         </div>
-      </div>
-
-      <Pictures setPictures={setImages} />
+        </div> */}
 
       <button className='button' onClick={onSubmit}>Submit</button>
     </div>

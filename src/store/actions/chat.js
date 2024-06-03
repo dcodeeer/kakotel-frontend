@@ -1,6 +1,6 @@
-export const signInAction = (data) => {
+export const addChatAction = (chat) => {
   return {
-    type: 'ADD',
-    payload: data
+    type: 'ADD_CHAT',
+    payload: chat,
   };
 };
