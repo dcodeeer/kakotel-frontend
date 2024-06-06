@@ -61,6 +61,15 @@
         font-weight: 500;
       }
     }
+
+    @media screen and (max-width: 912px) {
+      .top .title {
+        font-size: 32px;
+      }
+      .top .subtitle, .top .description {
+        font-size: 15px;
+      }
+    }
   }
   
   .second {
@@ -155,10 +164,24 @@
           line-height: 26px;
           margin-bottom: 10px;
         }
-        .description {
+        .content {
+          text-align: center;
           font-weight: 300;
           line-height: 30px;
         }
+      }
+    }
+
+    @media screen and (max-width: 912px) {
+      padding: 35px 25px;
+      .subtitle {
+        font-size: 15px;
+      }
+      .title {
+        font-size: 24px;
+      }
+      .description {
+        text-align: center;
       }
     }
   }
@@ -201,6 +224,22 @@
         width: 200px;
       }
     }
+
+    @media screen and (max-width: 912px) {
+      grid-template-columns: 1fr;      
+      gap: 25px;
+
+      .content {
+        gap: 20px;
+        padding: 0;
+
+        .title {
+          font-size: 24px;
+          line-height: 32px;
+          margin: 0;
+        }
+      }
+    }
     
   }
 
@@ -240,6 +279,23 @@
       }
       .button {
         width: 200px;
+      }
+    }
+
+    @media screen and (max-width: 912px) {
+      display: flex;    
+      flex-direction: column-reverse;
+      gap: 25px;
+
+      .content {
+        gap: 20px;
+        padding: 0;
+
+        .title {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 0;
+        }
       }
     }
     
@@ -339,6 +395,18 @@
         }
         .bottom {
           height: 100px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 912px) {
+      padding: 20px;
+      .top {
+        .title {
+          font-size: 24px;
+        }
+        .description {
+          text-align: center;
         }
       }
     }

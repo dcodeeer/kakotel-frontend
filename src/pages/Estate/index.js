@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router-dom';
 
 export const Estate = () => {
   const { estate } = useLoaderData();
-
+  console.log(estate);
   return (
     <div className='estate-page container'>
       <div className='pictures'>
@@ -22,7 +22,12 @@ export const Estate = () => {
       </div>
       
       <div className='information'>
-        <div className='left body-3'><b>Описание:</b> {estate.description}</div>
+        <div className='left body-3'>
+          <div className='description'>
+            <div className='subtitle'>Описание</div>
+            <p>{estate.description}</p>
+          </div>
+        </div>
         <div className='right'>
           <div className='box details'>
             <div className='subtitle'>Краткая информация</div>
@@ -46,7 +51,20 @@ export const Estate = () => {
               </div>
             </div>
 
-            <div className=''></div>
+            <div className='price'>
+              <div className='item'>
+                <div className='caption'>Аренда на 1 день:</div>
+                <div className='cash'>{estate.price_night}₽ /  ночь</div>
+              </div>
+              <div className='item'>
+                <div className='caption'>Аренда на неделю:</div>
+                <div className='cash'>{estate.price_week}₽ /  ночь</div>
+              </div>
+            </div>
+
+            <div className='write'>
+              <a className='button' href={`/chats?id=${estate.owner_id}`}>Написать сообщение</a>
+            </div>
 
           </div>
         </div>

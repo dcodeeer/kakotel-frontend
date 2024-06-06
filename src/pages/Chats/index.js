@@ -1,16 +1,23 @@
-import { Link, redirect, useLoaderData } from 'react-router-dom';
+import { Link, Navigate, redirect, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { ChatBox } from './ChatBox';
 import './styles.scss';
 import { store } from 'store';
 import { addChatAction } from 'store/actions/chat';
+import { useEffect, useLayoutEffect } from 'react';
 
 export const Chats = () => {
   const currentUser = useSelector(state => state.user.data);
   const chats = useSelector(state => state.chat);
   
   const { user } = useLoaderData();
+
+  if (user) {
+    if (user.id === currentUser.id) {
+      return <Navigate to={'/chats'} />
+    }
+  }
 
   function truncateText(text, maxLength) {
     if (!text) return;

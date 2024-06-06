@@ -39,8 +39,15 @@
     }
 
     .left {
-      font-weight: 300;
-      line-height: 28px;
+      .description {
+        font-weight: 300;
+        line-height: 28px;
+
+        .subtitle {
+          font-weight: 600;
+        }
+      }
+
     }
 
     .right {
@@ -61,6 +68,29 @@
             display: flex;
             align-items: center;
             gap: 10px;
+          }
+        }
+
+        .price {
+          background: #fff;
+          padding: 20px;
+          border-radius: 15px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          box-shadow: 10px 2px 50px 0px #0000000D;
+
+          .item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .caption {
+              font-size: 14px;
+            }
+            .cash {
+              font-size: 22px;
+              font-weight: 500;
+            }
           }
         }
       }

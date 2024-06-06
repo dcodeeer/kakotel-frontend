@@ -9,7 +9,7 @@ import { addChatAction } from 'store/actions/chat';
 export const ChatBox = ({ user, currentUser }) => {
   const messagesBoxRef = useRef(null);
   const ws = useRef(null);
-
+  
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -45,7 +45,33 @@ export const ChatBox = ({ user, currentUser }) => {
   };
 
   const chats = useSelector(state => state.chat);
+
+  const listenChat = (chatId) => {
+    ws.current.on(`message_from:${chatId}`, (message) => {
+      setMessages(oldArr => [...oldArr, JSON.parse(message)]);
+
+      console.log('first message')
+
+      const toEnd = getRemainingScrollDistance();
+      if (toEnd < 300) {
+        setTimeout(scrollToBottom, 150);
+      }
+    });
+  };
   
+  const listenObline = () => {
+    ws.current.on(`message_from:${chatId}`, (message) => {
+      setMessages(oldArr => [...oldArr, JSON.parse(message)]);
+
+      console.log('first message')
+
+      const toEnd = getRemainingScrollDistance();
+      if (toEnd < 300) {
+        setTimeout(scrollToBottom, 150);
+      }
+    });
+  };
+
   useEffect(() => {
     const init = async () => {
       let chatId = 0;
@@ -57,7 +83,7 @@ export const ChatBox = ({ user, currentUser }) => {
           const messagesReq = await axios.get(`/chats/messages?chatId=${chatId}`);
           if (messagesReq.status === 200) {
             if (messagesReq.data) {
-              setMessages(oldArr => [...oldArr, ...messagesReq.data]);
+              setMessages(oldArr => [...messagesReq.data]);
               setTimeout(scrollToBottom, 1);
             } else {
               setMessages([]);
@@ -66,35 +92,46 @@ export const ChatBox = ({ user, currentUser }) => {
         }
       } catch {}
 
-      // ws    
+      // ws
     if (window.innerWidth > 700) {
       ws.current = new Kuro('ws://localhost:4000/ws');
     } else {
       ws.current = new Kuro(process.env.REACT_APP_WS_URL);
     }
-    
-      ws.current.on(`message_from:${chatId}`, (message) => {
-        setMessages(oldArr => [...oldArr, JSON.parse(message)]);
 
-        const toEnd = getRemainingScrollDistance();
-        if (toEnd < 300) {
-          setTimeout(scrollToBottom, 150);
-        }
-      });
+    if (chatId !== 0) listenChat(chatId);
 
       // new messages
 
       ws.current.on('new_message', (payload) => {
         const chatsCopy = {...chats};
         const newMessage = JSON.parse(payload);
-        const chatId = newMessage['chat_id'];
-        const currentChat = chatsCopy[`chat_id:`+chatId];
-        delete chatsCopy[`chat_id:`+chatId]
+        const newChatId = newMessage['chat_id'];
+        let currentChat = chatsCopy[`chat_id:`+newChatId];
+        if (!currentChat) {
+          currentChat = {
+            friend_id: user.id,
+            friend_firstname: user.firstname,
+            friend_lastname: user.lastname,
+            friend_photo: user.photo,
+            last_message_sender: newMessage['sender_id'],
+            last_message_type: newMessage['type_id'],
+            last_message_content: newMessage['content'],
+          };
+          
+          setMessages(oldArr => [newMessage]);
+
+          if (chatId === 0) {
+            chatId = newChatId;
+            listenChat(newChatId);
+          };
+        }
+        delete chatsCopy[`chat_id:`+newChatId]
 
         currentChat['last_message_content'] = newMessage['content'];
 
         const output = {};
-        output[`chat_id:${chatId}`] = currentChat;
+        output[`chat_id:${newChatId}`] = currentChat;
         const newObj = {...output, ...chatsCopy};
         store.dispatch(addChatAction(newObj)); 
       });

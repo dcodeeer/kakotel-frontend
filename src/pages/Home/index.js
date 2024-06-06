@@ -53,22 +53,22 @@ export const Home = () => {
           <div className='block'>
             <svg width={65} height={65} viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.5 59.5833C32.5 59.5833 54.1667 48.75 54.1667 32.5V13.5416L32.5 5.41663L10.8333 13.5416V32.5C10.8333 48.75 32.5 59.5833 32.5 59.5833Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M24.375 32.5L29.7917 37.9167L40.625 27.0834" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/></svg>
             <div className='title'>Надежность</div>
-            <div className='description'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
+            <div className='content'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
           </div>
           <div className='block'>
             <svg width={65} height={65} viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.0833 5.41663H37.9167" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M32.5 37.9166L40.625 29.7916" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M32.5 59.5833C44.4662 59.5833 54.1667 49.8828 54.1667 37.9167C54.1667 25.9505 44.4662 16.25 32.5 16.25C20.5338 16.25 10.8333 25.9505 10.8333 37.9167C10.8333 49.8828 20.5338 59.5833 32.5 59.5833Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/></svg>
             <div className='title'>Экономия времени</div>
-            <div className='description'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
+            <div className='content'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
           </div>
           <div className='block'>
             <svg width={65} height={65} viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.0833 8.125H8.125V27.0833H27.0833V8.125Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M56.875 8.125H37.9167V27.0833H56.875V8.125Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M56.875 37.9166H37.9167V56.875H56.875V37.9166Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M27.0833 37.9166H8.125V56.875H27.0833V37.9166Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/></svg>
             <div className='title'>Огромный выбор</div>
-            <div className='description'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
+            <div className='content'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
           </div>
           <div className='block'>
             <svg width={65} height={65} viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.5 59.5833C47.4577 59.5833 59.5833 47.4577 59.5833 32.5C59.5833 17.5422 47.4577 5.41663 32.5 5.41663C17.5423 5.41663 5.41666 17.5422 5.41666 32.5C5.41666 47.4577 17.5423 59.5833 32.5 59.5833Z" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M24.6187 24.375C25.2555 22.5649 26.5123 21.0386 28.1665 20.0664C29.8208 19.0941 31.7658 18.7387 33.6569 19.0631C35.5481 19.3875 37.2635 20.3708 38.4992 21.8387C39.7349 23.3066 40.4112 25.1645 40.4083 27.0833C40.4083 32.5 32.2833 35.2083 32.2833 35.2083" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/><path d="M32.5 46.0416H32.5271" stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round"/></svg>
             <div className='title'>Тех. поддержка</div>
-            <div className='description'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
+            <div className='content'>Таким образом дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание модели развития. </div>
           </div>
         </div>
       </div>
