@@ -58,19 +58,6 @@ export const ChatBox = ({ user, currentUser }) => {
       }
     });
   };
-  
-  const listenObline = () => {
-    ws.current.on(`message_from:${chatId}`, (message) => {
-      setMessages(oldArr => [...oldArr, JSON.parse(message)]);
-
-      console.log('first message')
-
-      const toEnd = getRemainingScrollDistance();
-      if (toEnd < 300) {
-        setTimeout(scrollToBottom, 150);
-      }
-    });
-  };
 
   useEffect(() => {
     const init = async () => {
