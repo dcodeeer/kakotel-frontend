@@ -41,7 +41,7 @@ export const UploadPhoto = () => {
       {isLoading ? <LoaderModal /> : '' }
       <div className='form-title'>Фотография</div>
       <div className='content'>
-        <img id='preview' src={data.photo} />
+        <img id='preview' src={data.photo} alt={data.fullname} />
         <input id='photo' type='file' onChange={onChange} accept="image/png, image/gif, image/jpeg" />
         <label className='button' htmlFor='photo'>Загрузить фото</label>
       </div>

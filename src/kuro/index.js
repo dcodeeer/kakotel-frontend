@@ -41,7 +41,8 @@ export class Kuro {
     if (message.event) {
       const event = this.events[message.event];
       if (event) {
-        event(message.payload);
+        const payload = JSON.parse(message.payload);
+        event(payload);
       }
     }
   }

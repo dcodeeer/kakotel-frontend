@@ -1,10 +1,10 @@
 import { Stepper } from 'components/Stepper';
 import './styles.scss';
 import ReactTextareaAutosize from 'react-textarea-autosize';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pictures } from './Pictures';
 import axios from 'axios';
-import { Navigate, redirect, useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Modal } from 'components/Modal';
 import { LoaderModal } from 'components/LoaderModal';
 
@@ -34,19 +34,19 @@ export const Lease = () => {
   const [addressDistrict, setAddressDistrict] = useState('');
 
 
-  const onTapAmenity = (value) => {
-    const newArr = amenities;
-    if (!newArr.includes(value)) {
-      newArr.push(parseInt(value));
-    } else {
-      let indexToRemove = newArr.indexOf(parseInt(value));
-      if (indexToRemove !== -1) {
-        newArr.splice(indexToRemove, 1);
-      }
-    }
+  // const onTapAmenity = (value) => {
+  //   const newArr = amenities;
+  //   if (!newArr.includes(value)) {
+  //     newArr.push(parseInt(value));
+  //   } else {
+  //     let indexToRemove = newArr.indexOf(parseInt(value));
+  //     if (indexToRemove !== -1) {
+  //       newArr.splice(indexToRemove, 1);
+  //     }
+  //   }
     
-    setAmenities(newArr);
-  };
+  //   setAmenities(newArr);
+  // };
 
 
   const onSubmit = () => {

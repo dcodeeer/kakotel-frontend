@@ -39,7 +39,7 @@ export const User = () => {
         <div className='right' ref={menuRef}>
           <img src={data.photo} alt='user_photo' onClick={onClick} />
           <div className={isOpen ? 'menu show' : 'menu'} >
-            <div className='name'>Иван Иванов</div>
+            <div className='name'>{data.fullname}</div>
             <div className='border'></div>
             <Link to='/chats'>Сообщения</Link>
             <Link to='/lease'>Сдать жилье</Link> 

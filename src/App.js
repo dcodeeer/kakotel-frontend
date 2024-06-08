@@ -1,8 +1,6 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import axios from 'axios';
-import { store } from 'store';
-import { signInAction } from 'store/actions/user';
 
 import { Root } from 'components/Root';
 import { Home } from 'pages/Home';

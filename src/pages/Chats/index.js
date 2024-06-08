@@ -2,10 +2,10 @@ import { Link, Navigate, redirect, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { ChatBox } from './ChatBox';
-import './styles.scss';
 import { store } from 'store';
 import { addChatAction } from 'store/actions/chat';
-import { useEffect, useLayoutEffect } from 'react';
+
+import './styles.scss';
 
 export const Chats = () => {
   const currentUser = useSelector(state => state.user.data);
@@ -35,7 +35,7 @@ export const Chats = () => {
             <Link to={`/chats?id=${chats[key].friend_id}`} className='item' key={index}>
               <img src={process.env.REACT_APP_FILES_BASE_PATH + chats[key].friend_photo} alt={chats[key].friend_firstname} />
               <div className='data'>
-                <div className='name'>{`${chats[key].friend_firstname} ${chats[key].friend_lastname}`}</div>
+                <div className='name'>{chats[key].friend_fullname}</div>
                 <div className='last-message'>{chats[key].last_message_sender === currentUser.id ? 'Вы: ' : ''} {truncateText(chats[key].last_message_content, 18)}</div>
               </div>
               {chats[key].new_messages_count ? <div className='new'>{chats[key].new_messages_count}</div> : null}

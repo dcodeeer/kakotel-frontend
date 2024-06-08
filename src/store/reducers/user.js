@@ -2,8 +2,8 @@ const initState = {
   isAuth: false,
   data: {
     id: null,
-    firstname: null,
-    lastname: null,
+    fullname: null,
+    description: null,
     photo: null,
   },
 };
@@ -16,8 +16,8 @@ export const userReducer = (state = initState, action) => {
         isAuth: true,
         data: {
           id: action.payload.data.id,
-          firstname: action.payload.data.firstname,
-          lastname: action.payload.data.lastname,
+          fullname: action.payload.data.fullname,
+          description: action.payload.data.description,
           photo: action.payload.data.photo
         }
       };

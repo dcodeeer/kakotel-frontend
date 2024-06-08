@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal } from 'components/Modal';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import ReactTextareaAutosize from 'react-textarea-autosize';
 
 export const Personal = () => {
   const { data } = useSelector(state => state.user);
@@ -12,20 +13,20 @@ export const Personal = () => {
   const [modalText, setModalText]   = useState('Сообщение');
   const onClose = () => setModalOpen(false);
 
-  const [firstName, setFirstName] = useState(data.firstname);
-  const [lastName, setLastName] = useState(data.lastname);
+  const [fullname, setFullname] = useState(data.fullname);
+  const [description, setDescription] = useState(data.description);
 
   const onClick = async () => {
-    if (!firstName || !lastName) {
+    if (!fullname) {
       setModalTitle('Ошибка');
       setModalText('Заполните все поля');
       setModalOpen(true);
       return;
     }
 
-    if (firstName === data.firstname && lastName === data.lastname) return;
+    if (fullname === data.fullname && description === data.description) return;
     
-    const res = await axios.patch('/users/update', { firstName, lastName });
+    const res = await axios.patch('/users/update', { fullname, description });
     if (res.status === 200) {
       await getMe();
       setModalTitle('Сообщение');
@@ -40,12 +41,12 @@ export const Personal = () => {
       <div className='form-title'>Личные данные</div>
       <div className='box'>
         <div className='input-box'>
-          <label>Имя:</label>
-          <input type='text' placeholder='Ваше имя' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          <label>Полное имя:</label>
+          <input type='text' placeholder='Ваше имя' value={fullname} onChange={(e) => setFullname(e.target.value)} />
         </div>
         <div className='input-box'>
-          <label>Фамилия:</label>
-          <input type='text' placeholder='Ваша фамилия' value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          <label>О себе:</label>
+          <ReactTextareaAutosize minRows={2} placeholder='О себе' value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
         </div>
         <button className='button' onClick={onClick}>Сохранить изменения</button>
       </div>

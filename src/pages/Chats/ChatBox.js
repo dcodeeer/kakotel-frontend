@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { Kuro } from 'kuro';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { store } from 'store';
-import { addChatAction } from 'store/actions/chat';
+import { setMessages } from 'store/actions/messages';
 
 export const ChatBox = ({ user, currentUser }) => {
   const messagesBoxRef = useRef(null);
-  const ws = useRef(null);
-  
-  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+
+  const messages = useSelector(state => state.messages);
+  const dispatch = useDispatch();
+
+  let chatId;
 
   const scrollToBottom = () => {
     messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight;
@@ -26,7 +26,7 @@ export const ChatBox = ({ user, currentUser }) => {
       message_content: message,
     };
 
-    ws.current.emit('message', body);
+    global.ws.emit('message', body);
 
     setTimeout(scrollToBottom, 150);
 
@@ -44,21 +44,6 @@ export const ChatBox = ({ user, currentUser }) => {
     return 0;
   };
 
-  const chats = useSelector(state => state.chat);
-
-  const listenChat = (chatId) => {
-    ws.current.on(`message_from:${chatId}`, (message) => {
-      setMessages(oldArr => [...oldArr, JSON.parse(message)]);
-
-      console.log('first message')
-
-      const toEnd = getRemainingScrollDistance();
-      if (toEnd < 300) {
-        setTimeout(scrollToBottom, 150);
-      }
-    });
-  };
-
   useEffect(() => {
     const init = async () => {
       let chatId = 0;
@@ -70,65 +55,17 @@ export const ChatBox = ({ user, currentUser }) => {
           const messagesReq = await axios.get(`/chats/messages?chatId=${chatId}`);
           if (messagesReq.status === 200) {
             if (messagesReq.data) {
-              setMessages(oldArr => [...messagesReq.data]);
+              dispatch(setMessages(chatId, messagesReq.data));
               setTimeout(scrollToBottom, 1);
             } else {
-              setMessages([]);
+              //
             }
           }
         }
       } catch {}
 
-      // ws
-    if (window.innerWidth > 700) {
-      ws.current = new Kuro('ws://localhost:4000/ws');
-    } else {
-      ws.current = new Kuro(process.env.REACT_APP_WS_URL);
-    }
-
-    if (chatId !== 0) listenChat(chatId);
-
-      // new messages
-
-      ws.current.on('new_message', (payload) => {
-        const chatsCopy = {...chats};
-        const newMessage = JSON.parse(payload);
-        const newChatId = newMessage['chat_id'];
-        let currentChat = chatsCopy[`chat_id:`+newChatId];
-        if (!currentChat) {
-          currentChat = {
-            friend_id: user.id,
-            friend_firstname: user.firstname,
-            friend_lastname: user.lastname,
-            friend_photo: user.photo,
-            last_message_sender: newMessage['sender_id'],
-            last_message_type: newMessage['type_id'],
-            last_message_content: newMessage['content'],
-          };
-          
-          setMessages(oldArr => [newMessage]);
-
-          if (chatId === 0) {
-            chatId = newChatId;
-            listenChat(newChatId);
-          };
-        }
-        delete chatsCopy[`chat_id:`+newChatId]
-
-        currentChat['last_message_content'] = newMessage['content'];
-
-        const output = {};
-        output[`chat_id:${newChatId}`] = currentChat;
-        const newObj = {...output, ...chatsCopy};
-        store.dispatch(addChatAction(newObj)); 
-      });
     };
-
     init();
-
-    return () => {
-      ws.current.close();
-    };
   }, [user]);
 
   function resetTime(date) {
@@ -150,13 +87,13 @@ export const ChatBox = ({ user, currentUser }) => {
         <button onClick={() => navigate(-1)} className='arrow'><svg className="ionicon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M244 400L100 256l144-144M120 256h292" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48"/></svg></button>
         <img src={process.env.REACT_APP_FILES_BASE_PATH + user.photo} alt={''} />
         <div className='data'>
-          <div className='name'>{`${user.firstname} ${user.lastname}`}</div>
+          <div className='name'>{user.fullname}</div>
           <div className='status'>В сети</div>
         </div>
       </div>
       <div className='messages' ref={messagesBoxRef}>
         {
-          messages.map((v, i) => {
+          (messages[chatId] ? messages[chatId] : []).map((v, i) => {
             const time = new Date(v.created_at);
             let isFirstMessageForDay = false;
 
