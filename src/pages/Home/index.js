@@ -5,9 +5,7 @@ import axios from 'axios';
 
 export const Home = () => {
   const data = useLoaderData();
-  console.log(data)
   const estates = data['estates'];
-  console.log(data)
 
   const openAccordion = (e) => {
     e.currentTarget.parentNode.classList.toggle('show');
@@ -33,12 +31,12 @@ export const Home = () => {
         <div className='list'>
           {
             estates.map((estate) => (
-              <a href={`/estates/` + estate['id']} className='block'>
+              <Link to={`/estates/` + estate['id']} className='block'>
                 <img src={process.env.REACT_APP_FILES_BASE_PATH+estate.images[0]} alt='house' />
                 <div className='location'>{estate.address['street'] + ' ' + estate.address['address_number'] + ', ' + estate.address['city']}</div>
                 {/* <div className='info'>{estate.info}</div> */}
                 <div className='price'>{estate.price_night}₽ ночь</div>
-              </a>
+              </Link>
             ))
           }
         </div>

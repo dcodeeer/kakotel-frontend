@@ -1,0 +1,15 @@
+.dashboard-categories {
+  padding: 50px 0;
+
+  .dashboard-title {
+    margin-bottom: 50px;
+  }
+
+  .table {
+    .row {
+      display: grid;
+      grid-template-columns: 20px 200px 200px;
+      gap: 20px;
+    }
+  }
+}

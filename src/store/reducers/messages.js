@@ -1,4 +1,6 @@
-const initState = {};
+const initState = {
+  chats: {},
+};
 
 export const messagesReducer = (state = initState, action) => {
   switch (action.type) {

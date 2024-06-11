@@ -6,12 +6,13 @@ import { store } from 'store';
 import { addChatAction } from 'store/actions/chat';
 
 import './styles.scss';
+import { setMessages } from 'store/actions/messages';
 
 export const Chats = () => {
   const currentUser = useSelector(state => state.user.data);
   const chats = useSelector(state => state.chat);
   
-  const { user } = useLoaderData();
+  const { user, chatId } = useLoaderData();
 
   if (user) {
     if (user.id === currentUser.id) {
@@ -27,10 +28,13 @@ export const Chats = () => {
     return text;
   }
 
+  const chatsLen = Object.keys(chats).length;
+
   return (
     <div className='chats-page container'>
       <div className='left'>
         {
+          chatsLen > 0 ?
           Object.keys(chats).map((key, index) => (
             <Link to={`/chats?id=${chats[key].friend_id}`} className='item' key={index}>
               <img src={process.env.REACT_APP_FILES_BASE_PATH + chats[key].friend_photo} alt={chats[key].friend_firstname} />
@@ -40,10 +44,10 @@ export const Chats = () => {
               </div>
               {chats[key].new_messages_count ? <div className='new'>{chats[key].new_messages_count}</div> : null}
             </Link>
-          ))
+          )) : <div>нет активных чатов</div>
         }
       </div>
-      {user ? <ChatBox user={user} currentUser={currentUser} /> : null }
+      {user ? <ChatBox user={user} currentUser={currentUser} chatId={chatId} /> : <div className='select-chat'><div className='content'>Выберите чат</div></div> }
     </div>  
   );
 };
@@ -73,13 +77,37 @@ Chats.loader = async ({ request }) => {
       if (user.status === 200) {
         if (user.data) {
           output.user = user.data;
+
+          //
+          try {
+            const chatReq = await axios.get(`/chats/${user.data.id}`);
+            if (chatReq.status === 200) {
+              const chatId = chatReq.data.chat_id;
+              
+              const messagesReq = await axios.get(`/chats/messages?chatId=${chatId}`);
+              if (messagesReq.status === 200) {
+                output.chatId = chatId;
+
+                if (messagesReq.data) {
+                  store.dispatch(setMessages(chatId, messagesReq.data));
+                }
+              }
+            }
+          } catch {
+            output.chatId = 0;
+          }
+          ///
+
+
         }
       }
     }
 
     return output;
   } catch (e) {
-    console.log(e)
+    return {
+
+    };
   }
 
   return redirect('/');

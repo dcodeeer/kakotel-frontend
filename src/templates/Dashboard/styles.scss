@@ -1,0 +1,13 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr;
+  gap: 50px;
+
+  height: 100%;
+
+  .dashboard-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

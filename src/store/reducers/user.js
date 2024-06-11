@@ -18,7 +18,8 @@ export const userReducer = (state = initState, action) => {
           id: action.payload.data.id,
           fullname: action.payload.data.fullname,
           description: action.payload.data.description,
-          photo: action.payload.data.photo
+          photo: action.payload.data.photo,
+          admin: action.payload.data.admin,
         }
       };
     case 'LOGOUT':

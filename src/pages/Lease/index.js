@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Modal } from 'components/Modal';
 import { LoaderModal } from 'components/LoaderModal';
+import { ToastComponent } from 'components/Toast';
 
 export const Lease = () => {
   const navigate = useNavigate('');
@@ -87,6 +88,8 @@ export const Lease = () => {
   
   return (
     <div className='lease-page container'>
+      <ToastComponent type='success' message='Данные загружены и ожидают модерацию' />
+
       <div className='title'>Сдать жилье</div>
 
       {isLoad ? <LoaderModal /> : ''}

@@ -4,3 +4,10 @@ export const addChatAction = (chat) => {
     payload: chat,
   };
 };
+
+export const updateChatAction = (chatId, lastMessage) => {
+  return {
+    type: 'UPDATE_CHAT',
+    payload: { chatId, lastMessage },
+  };
+};

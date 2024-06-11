@@ -68,6 +68,18 @@
     }
   }
 
+  .select-chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 20px;
+    }
+  }
+
   .chat-box {
     background-color: #fff;
     box-shadow: 10px 2px 50px 0px #0000000D;

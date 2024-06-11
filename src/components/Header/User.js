@@ -41,6 +41,12 @@ export const User = () => {
           <div className={isOpen ? 'menu show' : 'menu'} >
             <div className='name'>{data.fullname}</div>
             <div className='border'></div>
+            { data.admin ? 
+              <>
+                <Link to='/dashboard'>Панель управления</Link>
+                <div className='border'></div>
+              </> :  null
+            }
             <Link to='/chats'>Сообщения</Link>
             <Link to='/lease'>Сдать жилье</Link> 
             <Link to='/settings'>Настройки</Link>

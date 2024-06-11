@@ -1,10 +1,13 @@
 import axios from 'axios';
 import './styles.scss';
 import { useLoaderData } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const Estate = () => {
+  const currentUser = useSelector(state => state.user.data);
+
   const { estate } = useLoaderData();
-  console.log(estate);
+  
   return (
     <div className='estate-page container'>
       <div className='pictures'>
@@ -63,7 +66,7 @@ export const Estate = () => {
             </div>
 
             <div className='write'>
-              <a className='button' href={`/chats?id=${estate.owner_id}`}>Написать сообщение</a>
+              {estate.owner_id !== currentUser.id ? <a className='button' href={`/chats?id=${estate.owner_id}`}>Написать сообщение</a> : null}
             </div>
 
           </div>

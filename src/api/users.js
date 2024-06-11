@@ -33,13 +33,13 @@ export const signUp = async (data) => {
 export const getMe = async () => {
   const userRequest = await axios.get('/users/getMe');
   if (userRequest.status === 200) {
-    let { id, fullname, description, photo } = userRequest.data;
+    let { id, fullname, description, photo, admin } = userRequest.data;
     if (photo === null) {
       photo = '/images/default.png'
     } else {
       photo = process.env.REACT_APP_FILES_BASE_PATH + photo;
     }
-    store.dispatch(signInAction({ isAuth: true, data: { id, fullname, description, photo } }));
+    store.dispatch(signInAction({ isAuth: true, data: { id, fullname, description, photo, admin } }));
     return true;
   }
 };
