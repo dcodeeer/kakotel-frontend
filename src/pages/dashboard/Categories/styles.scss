@@ -1,15 +1,54 @@
 .dashboard-categories {
   padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 
   .dashboard-title {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+  }
+  .dashboard-subtitle {
+    margin-bottom: 15px;
   }
 
-  .table {
+  .add-new {
+    margin-bottom: 50px;
+
     .row {
-      display: grid;
-      grid-template-columns: 20px 200px 200px;
-      gap: 20px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      input {
+        background-color: #F7F7F7;
+        border: 1px solid #F7F7F7;
+        padding: 15px 25px;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .list {
+    .table {
+      background: #F7F7F7;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 15px;
+
+      .row {
+        display: grid;
+        grid-template-columns: 20px 200px 200px;
+        align-items: center;
+        gap: 20px;
+
+        img {
+          width: 50px;
+        }
+      }
     }
   }
 }
